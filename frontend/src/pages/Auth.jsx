@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import Input from "../components/Input";
 import logo from "../assets/logo.png";
+import { FcGoogle } from "react-icons/fc";
+import { FaGithub } from "react-icons/fa";
+
 export default function Auth() {
-  const [email, setEmail] = useState("");
-  const [name, setName] = useState("");
-  const [password, setPassword] = useState("");
+  var [email, setEmail] = useState("");
+  var [name, setName] = useState("");
+  var [password, setPassword] = useState("");
 
   const [variant, setVariant] = useState("login");
 
@@ -12,7 +15,7 @@ export default function Auth() {
     setVariant((currentVariant) =>
       currentVariant === "login" ? "register" : "login"
     );
-  }
+  };
   const register = async () => {
     // console.log("here in auth.tsx  =========", email, name, password);
     // try {
@@ -73,14 +76,20 @@ export default function Auth() {
             >
               {variant === "login" ? "Login" : "Sign up"}
             </button>
-            {/* <div className="flex flex-row items-center gap-4 mt-8 justify-center">
-                    <div onClick={() => signIn('google', { callbackUrl: '/profiles' })} className="w-10 h-10 bg-white rounded-full flex items-center justify-center cursor-pointer hover:opacity-80 transition">
-                        <FcGoogle size={32} />
-                    </div>
-                    <div onClick={() => signIn('github', { callbackUrl: '/profiles' })} className="w-10 h-10 bg-white rounded-full flex items-center justify-center cursor-pointer hover:opacity-80 transition">
-                        <FaGithub size={32} />
-                    </div>
-                </div> */}
+            <div className="flex flex-row items-center gap-4 mt-8 justify-center">
+              <div
+                onClick={() => signIn("google", { callbackUrl: "/profiles" })}
+                className="w-10 h-10 bg-white rounded-full flex items-center justify-center cursor-pointer hover:opacity-80 transition"
+              >
+                <FcGoogle size={32} />
+              </div>
+              <div
+                onClick={() => signIn("github", { callbackUrl: "/profiles" })}
+                className="w-10 h-10 bg-white rounded-full flex items-center justify-center cursor-pointer hover:opacity-80 transition"
+              >
+                <FaGithub size={32} />
+              </div>
+            </div>
             <p className="text-neutral-500 mt-12">
               {variant === "login"
                 ? "First time using Netflix?"
