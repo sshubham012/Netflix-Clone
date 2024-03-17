@@ -6,6 +6,8 @@ import Auth from "./pages/Auth.jsx";
 import Profiles from "./pages/Profiles.jsx";
 import Navbar from "./components/Navbar.jsx";
 import Billboard from "./components/Billboard.jsx";
+import { MovieList } from "./components/MovieList.jsx";
+import movieData from "../movies.json";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
@@ -14,5 +16,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     {/* <Profiles /> */}
     <Navbar />
     <Billboard />
+    <MovieList title="Trending Now" data={movieData} />
+    <MovieList title="My List" data={movieData} />
   </React.StrictMode>
 );
