@@ -6,10 +6,12 @@ const {
   getUser,
   deleteOneUser,
   deleteAllUsers,
+  login,
 } = require("../controllers");
 
-// Route to register a new user
+// Route to register/login a user
 router.post("/auth/register", register);
+router.post("/auth/login", login);
 
 // Routes for user operations
 router.get("/", getAllUsers);

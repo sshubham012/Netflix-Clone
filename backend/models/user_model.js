@@ -14,7 +14,7 @@ const UserSchema = new mongoose.Schema({
   favoriteIds: [{ type: mongoose.Schema.Types.ObjectId }],
 });
 
-UserSchema.methods.createJWT = function () {
+UserSchema.methods.generateJWT = function () {
   return jwt.sign({ userID: this._id }, process.env.JWT_SECRET, {
     expiresIn: process.env.JWT_LIFETIME,
   });

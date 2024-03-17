@@ -1,4 +1,4 @@
-const register = require("./create-user-controller");
+const { register, login } = require("./user-auth-controller");
 const { getAllUsers, getUser } = require("./fetch-user-controller");
 const { deleteOneUser, deleteAllUsers } = require("./delete-user-controller");
 module.exports = {
@@ -6,5 +6,6 @@ module.exports = {
   getAllUsers,
   getUser,
   deleteOneUser,
-  deleteAllUsers
+  deleteAllUsers,
+  login,
 };
