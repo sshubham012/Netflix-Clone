@@ -38,11 +38,11 @@ Install the required dependencies for both the client (React.js) and server (Nod
 
 ```bash
 # Install client dependencies
-cd client
+cd frontend
 npm install
 
 # Install server dependencies
-cd ../server
+cd ../backend
 npm install
 ```
 
@@ -52,11 +52,12 @@ Ensure you have MongoDB installed and running locally on your machine. You can d
 
 ### 5. Configure Environment Variables
 
-In the `server` directory, create a `.env` file and configure the necessary environment variables. You may need to specify MongoDB connection URI, JWT secret, etc.
+In the `backend` directory, create a `.env` file and configure the necessary environment variables. You may need to specify MongoDB connection URI, JWT secret, etc.
 
 Example `.env` file:
 
 ```plaintext
+PORT=your-port-number
 MONGODB_URI=your-mongodb-connection-uri
 JWT_SECRET=your-jwt-secret
 ```
@@ -65,20 +66,20 @@ JWT_SECRET=your-jwt-secret
 
 #### Start the Server
 
-In the `server` directory, start the Node.js/Express.js server:
+In the `backend` directory, start the Node.js/Express.js server:
 
 ```bash
 cd server
-npm start
+npm run dev
 ```
 
 #### Start the Client
 
-In a separate terminal window, navigate to the `client` directory and start the React.js client:
+In a separate terminal window, navigate to the `frontend` directory and start the React.js client:
 
 ```bash
 cd client
-npm start
+npm run dev
 ```
 
 The project should now be running locally. You can access it by opening your web browser and visiting `http://localhost:3000`.
