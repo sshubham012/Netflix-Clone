@@ -2,28 +2,14 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.jsx";
 import "./index.css";
-import Auth from "./pages/Auth.jsx";
-import Profiles from "./pages/Profiles.jsx";
-import Navbar from "./components/Navbar.jsx";
-import Billboard from "./components/Billboard.jsx";
-import { MovieList } from "./components/MovieList.jsx";
-import movieData from "../movies.json";
-import { InfoModal } from "./components/InfoModal.jsx";
+
+import { Provider } from "react-redux";
+import { store } from "./state_manager/store.js";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    {/* <App /> */}
-    {/* <Auth /> */}
-    {/* <Profiles /> */}
-    <InfoModal
-      visible
-      onClose={() => {
-        alert("onclosed");
-      }}
-    />
-    <Navbar />
-    <Billboard />
-    <MovieList title="Trending Now" data={movieData} />
-    <MovieList title="My List" data={movieData} />
+    <Provider store={store}>
+      <App />
+    </Provider>
   </React.StrictMode>
 );
