@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { registerUserThunk } from "./userThunk";
+import axios from "axios";
 
 const initialState = {
   isLoading: false,
@@ -12,7 +13,10 @@ export const registerUser = createAsyncThunk(
   "user/register-user",
   async (user, thunkAPI) => {
     console.log(user);
-    const res = await axios.get("http://locahost:5000/user/auth/register", user);
+    const res = await axios.post(
+      "http://locahost:5000/user/auth/register",
+      user
+    );
     return res;
   }
 );
@@ -28,7 +32,7 @@ const userSlice = createSlice({
         console.log("fullfilled");
       })
       .addCase(registerUser.rejected, (state, action) => {
-
+        console.log(action);
         console.log("rejected");
         console.log(state);
       });

@@ -5,6 +5,7 @@ const { BadRequestError, UnauthenticatedError } = require("../errors");
 const bcrypt = require("bcrypt");
 const register = async (req, res) => {
   console.log("reached herer")
+  console.log(req.body);
   // const hashedPassword = await bcrypt.hash(req.body.password, 12);
   // const userData = {
   //   name: req.body.name,
