@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 
-export default function Input({ input, label, type, id, value }) {
+export default function Input({  onChange, label, type, id, value }) {
   return (
     <div className="relative">
       <input
-        // onChange={onChange}
+        onChange={onChange}
         value={value}
         type={type}
         id={id}
