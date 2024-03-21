@@ -11,7 +11,9 @@ const initialState = {
 export const registerUser = createAsyncThunk(
   "user/register-user",
   async (user, thunkAPI) => {
-    return registerUserThunk("/user/auth/register", user, thunkAPI);
+    console.log(user);
+    const res = await axios.get("http://locahost:5000/user/auth/register", user);
+    return res;
   }
 );
 const userSlice = createSlice({
@@ -19,14 +21,16 @@ const userSlice = createSlice({
   initialState,
   extraReducers: (builder) => {
     builder
-      .addCase(registerUser.pending, () => {
+      .addCase(registerUser.pending, (state, action) => {
         console.log("pending");
       })
-      .addCase(registerUser.fulfilled, () => {
+      .addCase(registerUser.fulfilled, (state, action) => {
         console.log("fullfilled");
       })
-      .addCase(registerUser.rejected, () => {
+      .addCase(registerUser.rejected, (state, action) => {
+
         console.log("rejected");
+        console.log(state);
       });
   },
 });

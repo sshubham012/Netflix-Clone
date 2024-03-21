@@ -3,35 +3,38 @@ import Input from "../components/Input";
 import logo from "../assets/logo.png";
 import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa";
+import { useDispatch, useSelector } from "react-redux";
+import { registerUser } from "../state_manager/user/userSlice";
 
 export default function Auth() {
-  var [email, setEmail] = useState("");
-  var [name, setName] = useState("");
-  var [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
+  const [password, setPassword] = useState("");
+  const [variant, setVariant] = useState("register");
 
-  const [variant, setVariant] = useState("login");
+  const dispatch = useDispatch();
 
   const toggleVariant = () => {
     setVariant((currentVariant) =>
       currentVariant === "login" ? "register" : "login"
     );
   };
+  // const handleKeyDown =(e)=>{
+  //   if(e.key == "Enter")
+  // }
   const register = async () => {
-    // console.log("here in auth.tsx  =========", email, name, password);
-    // try {
-    //   console.log("here in auth.tsx  =========", email, name, password);
-    //   await axios.post("/api/register", {
-    //     email,
-    //     name,
-    //     password,
-    //   });
-    //   console.log("here in auth.tsx  =========", email, name, password);
-    //   // login();
-    // } catch (error) {
-    //   console.log("here in catch of registration    ");
-    //   console.log(error);
-    // }
+    console.log(email, name, password);
+    console.log("doing good");
+    console.log("shik shak shok");
 
+    if (!email || !name || !password) {
+      alert("Please Fill out all details");
+      return;
+    }
+    dispatch(registerUser({ email, name, password }));
+      
+  };
+  const login = async () => {
     console.log("shik shak shok");
   };
   return (
@@ -71,20 +74,21 @@ export default function Auth() {
               />
             </div>
             <button
-              onClick={register}
+              onClick={variant === "login" ? login : register}
               className="bg-red-600 py-3 text-white rounded-md w-full mt-10 hover:bg-red-700 transition"
+              type="submit"
             >
               {variant === "login" ? "Login" : "Sign up"}
             </button>
             <div className="flex flex-row items-center gap-4 mt-8 justify-center">
               <div
-                onClick={() => signIn("google", { callbackUrl: "/profiles" })}
+                onClick={() => alert("logging using Google")}
                 className="w-10 h-10 bg-white rounded-full flex items-center justify-center cursor-pointer hover:opacity-80 transition"
               >
                 <FcGoogle size={32} />
               </div>
               <div
-                onClick={() => signIn("github", { callbackUrl: "/profiles" })}
+                onClick={() => alert("logging using Github")}
                 className="w-10 h-10 bg-white rounded-full flex items-center justify-center cursor-pointer hover:opacity-80 transition"
               >
                 <FaGithub size={32} />
