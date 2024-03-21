@@ -5,7 +5,7 @@ import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { registerUser } from "../state_manager/user/userSlice";
-
+import axios from "axios";
 export default function Auth() {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
@@ -31,8 +31,16 @@ export default function Auth() {
       alert("Please Fill out all details");
       return;
     }
-    dispatch(registerUser({ email, name, password }));
-      
+    const userData = {
+      email,
+      name,
+      password,
+    };
+    dispatch(registerUser(userData));
+    // const result = await axios
+    //   .post("http://localhost:5000/user/auth/register", userData)
+    //   .then((resp) => console.log(resp))
+    //   .catch((error) => console.log(error));
   };
   const login = async () => {
     console.log("shik shak shok");

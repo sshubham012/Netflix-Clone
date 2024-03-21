@@ -7,9 +7,13 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Profiles from "./pages/Profiles";
 import Dashboard from "./pages/Dashboard";
 import Auth from "./pages/Auth";
+import TestComponent from "./components/TestComponet";
 
 const router = createBrowserRouter([
-  { path: "/", element: <Auth /> },
+  { path: "/", element: 
+  // <TestComponent/>
+  <Auth /> 
+},
   { path: "/profiles", element: <Profiles /> },
 ]);
 function App() {
