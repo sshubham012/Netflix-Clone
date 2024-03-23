@@ -1,6 +1,7 @@
 import React from "react";
 import { FavButton } from "./FavButton";
-// import {PlayIcon} from "react-icons"
+import { BsFillPlayCircleFill } from "react-icons/bs";
+import { BsChevronDown } from "react-icons/bs";
 export const MovieCard = ({ data }) => {
   return (
     <div className="group bg-zinc-900 col-span relative h-[12vw]">
@@ -43,7 +44,7 @@ export const MovieCard = ({ data }) => {
       "
       >
         <img
-          //   onClick={redirectToWatch}
+          // onClick={redirectToWatch}
           src={data.thumbnailUrl}
           alt="Movie"
           draggable={false}
@@ -73,17 +74,17 @@ export const MovieCard = ({ data }) => {
         >
           <div className="flex flex-row items-center gap-3">
             <div
-              //   onClick={redirectToWatch}
+              // onClick={redirectToWatch}
               className="cursor-pointer w-6 h-6 lg:w-10 lg:h-10 bg-white rounded-full flex justify-center items-center transition hover:bg-neutral-300"
             >
-              {/* <PlayIcon className="text-black w-4 lg:w-6" /> */}
+              <BsFillPlayCircleFill className="text-black w-4 lg:w-6" />
             </div>
-            <FavButton movieId={data?.id} />
+            <FavButton movieId={data.id} />
             <div
-              //   onClick={() => openModal(data?.id)}
+              // onClick={() => openModal(data?.id)}
               className="cursor-pointer ml-auto group/item w-6 h-6 lg:w-10 lg:h-10 border-white border-2 rounded-full flex justify-center items-center transition hover:border-neutral-300"
             >
-              {/* <ChevronDownIcon className="text-white group-hover/item:text-neutral-300 w-4 lg:w-6" /> */}
+              <BsChevronDown className="text-white group-hover/item:text-neutral-300 w-4 lg:w-6" />
             </div>
           </div>
           <p className="text-green-400 font-semibold mt-4">
