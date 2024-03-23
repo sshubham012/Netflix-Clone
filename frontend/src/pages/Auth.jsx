@@ -1,32 +1,28 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Input from "../components/Input";
 import logo from "../assets/logo.png";
 import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
-import { registerUser } from "../state_manager/user/userSlice";
-import axios from "axios";
+import { loginUser, registerUser } from "../state_manager/user/userSlice";
+import { toast } from "react-toastify";
+import { store } from "../state_manager/store";
+import { useNavigate } from "react-router";
 export default function Auth() {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
-  const [variant, setVariant] = useState("register");
-
+  const [variant, setVariant] = useState("login");
+  const isValidUser = useSelector((store) => store?.user.isValidUser);
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
   const toggleVariant = () => {
     setVariant((currentVariant) =>
       currentVariant === "login" ? "register" : "login"
     );
   };
-  // const handleKeyDown =(e)=>{
-  //   if(e.key == "Enter")
-  // }
-  const register = async () => {
-    console.log(email, name, password);
-    console.log("doing good");
-    console.log("shik shak shok");
 
+  const register = async () => {
     if (!email || !name || !password) {
       alert("Please Fill out all details");
       return;
@@ -37,14 +33,26 @@ export default function Auth() {
       password,
     };
     dispatch(registerUser(userData));
-    // const result = await axios
-    //   .post("http://localhost:5000/user/auth/register", userData)
-    //   .then((resp) => console.log(resp))
-    //   .catch((error) => console.log(error));
   };
   const login = async () => {
-    console.log("shik shak shok");
+    if (!email || !password) {
+      toast.error("Please fill all details....");
+      return;
+    }
+    const userData = {
+      email,
+      password,
+    };
+    const thiss = dispatch(loginUser(userData));
+    console.log(thiss);
   };
+
+  useEffect(() => {
+    if (isValidUser) {
+      navigate("/profiles");
+    }
+  }, [isValidUser]);
+
   return (
     <div className="relative h-full w-full bg-[url('/src/assets/hero.jpg')] bg-no-repeat bg-center bg-fixed bg-cover">
       <div className="bg-black w-full h-full lg:bg-opacity-50">

@@ -1,6 +1,3 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
 import "./App.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 // import { router } from "../routes";
@@ -8,21 +5,26 @@ import Profiles from "./pages/Profiles";
 import Dashboard from "./pages/Dashboard";
 import Auth from "./pages/Auth";
 import TestComponent from "./components/TestComponet";
-
+import { ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 const router = createBrowserRouter([
-  { path: "/", element: 
-  // <TestComponent/>
-  <Auth /> 
-},
+  {
+    path: "/",
+    element: (
+      // <TestComponent/>
+      <Auth />
+    ),
+  },
   { path: "/profiles", element: <Profiles /> },
+  { path: "/netflix-and-chill", element: <Dashboard /> },
+
 ]);
 function App() {
-  // const [count, setCount] = useState(0);
 
   return (
     <div className="h-full w-full">
       <RouterProvider router={router} />
-
+      <ToastContainer autoClose={5000} position="bottom-right"/>
       {/* <Auth /> */}
       {/* <Profiles /> */}
       {/* <InfoModal
