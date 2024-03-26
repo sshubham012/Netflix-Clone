@@ -29,6 +29,16 @@ export const loginUser = createAsyncThunk(
   }
 );
 
+export const getGithubCreds = createAsyncThunk(
+  "user/githubLogin",
+  async (code, thunkAPI) => {
+    const token = await axios.post(
+      "http://localhost:5000/user/githubAccess",
+      user
+    );
+  }
+);
+
 const userSlice = createSlice({
   name: "user",
   initialState,

@@ -1,13 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
 import profileLogo from "../assets/default-blue.png";
 import { useNavigate } from "react-router";
+import { useSelector } from "react-redux";
 
 export default function Profiles() {
   const navigate = useNavigate();
+  const isValidUser = useSelector((store) => store.user.isValidUser);
   const handleNav = () => {
     console.log("hehe");
     navigate("/netflix-and-chill");
   };
+  useEffect(() => {
+    if (!isValidUser) navigate("/");
+  },[]);
   return (
     <div className="flex items-center h-full justify-center">
       <div className="flex flex-col">
