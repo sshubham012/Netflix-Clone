@@ -47,7 +47,7 @@ export default function Navbar() {
         </div>
         <div
           onClick={toggleMenu}
-          className="lg:hidden flex flex-row items-center gap2 ml-8 cursor-pointer relative"
+          className="lg:hidden flex flex-row items-center gap-2 ml-8 cursor-pointer relative"
         >
           <p className="text-white text-sm">Browse</p>
           <BsChevronDown
@@ -68,7 +68,7 @@ export default function Navbar() {
             onClick={toggleAccountMenu}
             className="flex flex-row items-center gap-2 cursor-pointer relative"
           >
-            <div className="w-6 h-6 lg:w-10 lgh-10 rounded-md overflow-hidden">
+            <div className="w-6 h-6 lg:w-10 lg:h-10 rounded-md overflow-hidden">
               <img src={profileLogo} alt="Profile Logo" />
             </div>
             <BsChevronDown

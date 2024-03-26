@@ -4,10 +4,13 @@ import logo from "../assets/logo.png";
 import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
-import { loginUser, registerUser } from "../state_manager/user/userSlice";
+import {getGithubCreds, loginUser, registerUser } from "../state_manager/user/userSlice";
 import { toast } from "react-toastify";
 import { store } from "../state_manager/store";
 import { useNavigate } from "react-router";
+
+const CLIENT_ID = "fd47e71dea4f9e7ee15a";
+
 export default function Auth() {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
@@ -21,6 +24,24 @@ export default function Auth() {
       currentVariant === "login" ? "register" : "login"
     );
   };
+
+  const githubLogin = () => {
+    // console.log(window.location)
+    window.location.assign(
+      "https:/github.com/login/oauth/authorize?client_id=" + CLIENT_ID
+    );
+  };
+
+  useEffect(() => {
+    const queryParams = window.location.search;
+    const urlParams = new URLSearchParams(queryParams);
+    const codeParam = urlParams.get("code");
+    console.log("codeParams: ", codeParam);
+
+    if(codeParam && !localStorage.getItem(accessToken)){
+      dispatch(getGithubCreds());
+    }
+  }, []);
 
   const register = async () => {
     if (!email || !name || !password) {
@@ -104,7 +125,7 @@ export default function Auth() {
                 <FcGoogle size={32} />
               </div>
               <div
-                onClick={() => alert("logging using Github")}
+                onClick={githubLogin}
                 className="w-10 h-10 bg-white rounded-full flex items-center justify-center cursor-pointer hover:opacity-80 transition"
               >
                 <FaGithub size={32} />

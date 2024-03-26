@@ -7,9 +7,11 @@ const {
   deleteOneUser,
   deleteAllUsers,
   login,
+  githubLogin
 } = require("../controllers");
 
 // Route to register/login a user
+router.get("/githubAccess", githubLogin);
 router.post("/auth/register", register);
 router.post("/auth/login", login);
 
