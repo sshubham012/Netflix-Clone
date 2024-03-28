@@ -12,7 +12,7 @@ const {
 } = require("../controllers");
 
 // Route to register/login a user
-router.get("/github-access-token", githubAccessToken);
+router.get("/getaccesstoken", githubAccessToken);
 router.post("/auth/register", register);
 router.post("/auth/login", login);
 router.get("/user-data", getgitdata);

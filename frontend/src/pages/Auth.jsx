@@ -5,7 +5,7 @@ import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  getGithubCreds,
+  getGithubAccessToken,
   loginUser,
   registerUser,
 } from "../state_manager/user/userSlice";
@@ -43,9 +43,9 @@ export default function Auth() {
     console.log("codeParams: ", codeParam);
 
     if (codeParam && !localStorage.getItem("accessToken")) {
-      dispatch(getGithubCreds(codeParam));
+      dispatch(getGithubAccessToken(codeParam));
     }
-  }, [githubLogin]);
+  }, []);
 
   const register = async () => {
     if (!email || !name || !password) {

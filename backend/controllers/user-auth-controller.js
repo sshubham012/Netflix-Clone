@@ -39,7 +39,8 @@ const login = async (req, res) => {
 };
 
 const githubAccessToken = async (req, res) => {
-  req.query.code;
+  console.log("GitHub authorization code:", req.query.code);
+
   const params =
     "?client_id=" +
     process.env.CLIENT_ID +
@@ -47,23 +48,31 @@ const githubAccessToken = async (req, res) => {
     process.env.CLIENT_SECRET +
     "&code=" +
     req.query.code;
-  await fetch("https://github.com/login/oauth/access_token" + params, {
-    method: "POST",
-    headers: {
-      Accept: "application/json",
-    },
-  })
-    .then((response) => {
-      return response.json();
-    })
-    .then((data) => {
-      console.log(data);
-      res.status(StatusCodes.OK).send(data);
-    })
-    .catch((error) => {
-      console.log("ERROR", error);
-      res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(error);
-    });
+
+  try {
+    const response = await fetch(
+      "https://github.com/login/oauth/access_token" + params,
+      {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+        },
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    console.log("GitHub access token response:", data);
+    res.status(StatusCodes.OK).json(data);
+  } catch (error) {
+    console.error("Error fetching GitHub access token:", error);
+    res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .json({ error: error.message });
+  }
 };
 
 const getgitdata = async (req, res) => {
@@ -76,9 +85,6 @@ const getgitdata = async (req, res) => {
   const response = await fetch(url, { method: "GET", headers });
   console.log(1);
 
-  // if (!response.ok) {
-  //   throw new Error(`HTTP error! Status: ${response.status}`);
-  // }
   console.log(1);
 
   console.log(response);
