@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { toast } from "react-toastify";
+import customAxios from "../../../utils/axios";
 
 const initialState = {
   isValidUser: false,
@@ -32,16 +33,43 @@ export const loginUser = createAsyncThunk(
 export const getGithubCreds = createAsyncThunk(
   "user/githubLogin",
   async (code, thunkAPI) => {
-    const token = await axios.post(
-      "http://localhost:5000/user/githubAccess",
-      user
+    console.log(code);
+    const token = await customAxios.get(
+      "http://localhost:5000/user/user-data?code=" + code
     );
+    console.log(token);
+    // console.log(thunkAPI)
+    // console.log(code);
+  }
+);
+
+export const clearStore = createAsyncThunk(
+  "user/clearStore",
+  async (message, thunkAPI) => {
+    try {
+      thunkAPI.dispatch(logoutUser(message));
+      thunkAPI.dispatch(clearAllJobsState());
+      thunkAPI.dispatch(clearValues());
+      return Promise.resolve();
+    } catch (error) {
+      return Promise.reject();
+    }
   }
 );
 
 const userSlice = createSlice({
   name: "user",
   initialState,
+  reducers: {
+    logoutUser: (state, { payload }) => {
+      state.user = null;
+      state.isSidebarOpen = false;
+      removeUserFromLocalStorage();
+      if (payload) {
+        toast.success(payload);
+      }
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(registerUser.pending, (state, action) => {
