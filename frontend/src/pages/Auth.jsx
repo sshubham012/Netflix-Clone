@@ -4,7 +4,11 @@ import logo from "../assets/logo.png";
 import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
-import {getGithubCreds, loginUser, registerUser } from "../state_manager/user/userSlice";
+import {
+  getGithubAccessToken,
+  loginUser,
+  registerUser,
+} from "../state_manager/user/userSlice";
 import { toast } from "react-toastify";
 import { store } from "../state_manager/store";
 import { useNavigate } from "react-router";
@@ -38,8 +42,8 @@ export default function Auth() {
     const codeParam = urlParams.get("code");
     console.log("codeParams: ", codeParam);
 
-    if(codeParam && !localStorage.getItem(accessToken)){
-      dispatch(getGithubCreds());
+    if (codeParam && !localStorage.getItem("accessToken")) {
+      dispatch(getGithubAccessToken(codeParam));
     }
   }, []);
 

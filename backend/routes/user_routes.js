@@ -1,20 +1,21 @@
 const express = require("express");
 const router = express.Router();
 const {
+  getgitdata,
   register,
   getAllUsers,
   getUser,
   deleteOneUser,
   deleteAllUsers,
   login,
-  githubLogin
+  githubAccessToken,
 } = require("../controllers");
 
 // Route to register/login a user
-router.get("/githubAccess", githubLogin);
+router.get("/getaccesstoken", githubAccessToken);
 router.post("/auth/register", register);
 router.post("/auth/login", login);
-
+router.get("/user-data", getgitdata);
 // Routes for user operations
 router.get("/", getAllUsers);
 router.delete("/", deleteAllUsers);

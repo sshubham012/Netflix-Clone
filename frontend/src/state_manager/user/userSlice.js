@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { toast } from "react-toastify";
+import customAxios from "../../../utils/axios";
 
 const initialState = {
   isValidUser: false,
@@ -29,19 +30,47 @@ export const loginUser = createAsyncThunk(
   }
 );
 
-export const getGithubCreds = createAsyncThunk(
+export const getGithubAccessToken = createAsyncThunk(
   "user/githubLogin",
   async (code, thunkAPI) => {
-    const token = await axios.post(
-      "http://localhost:5000/user/githubAccess",
-      user
+    console.log(code);
+    const token = await customAxios.get(
+      "http://localhost:5000/user/getaccesstoken?code=" + code
     );
+    console.log(token);
+    return token;
+    // console.log(thunkAPI)
+    // console.log(code);
+  }
+);
+
+export const clearStore = createAsyncThunk(
+  "user/clearStore",
+  async (message, thunkAPI) => {
+    try {
+      thunkAPI.dispatch(logoutUser(message));
+      thunkAPI.dispatch(clearAllJobsState());
+      thunkAPI.dispatch(clearValues());
+      return Promise.resolve();
+    } catch (error) {
+      return Promise.reject();
+    }
   }
 );
 
 const userSlice = createSlice({
   name: "user",
   initialState,
+  reducers: {
+    logoutUser: (state, { payload }) => {
+      state.user = null;
+      state.isSidebarOpen = false;
+      removeUserFromLocalStorage();
+      if (payload) {
+        toast.success(payload);
+      }
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(registerUser.pending, (state, action) => {
@@ -71,6 +100,24 @@ const userSlice = createSlice({
         toast.success("Logged in successfully!");
       })
       .addCase(loginUser.rejected, (state, action) => {
+        state.isLoading = false;
+        console.log(state);
+        console.log(action);
+        toast.error("login failed", action.error.message);
+        // Log the error to the console
+        console.error("Login failed", action.error);
+      })
+      .addCase(getGithubAccessToken.pending, (state, action) => {
+        state.isLoading = true;
+      })
+      .addCase(getGithubAccessToken.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isValidUser = true;
+        console.log("state", state);
+        console.log("action", action);
+        toast.success("Logged in successfully!");
+      })
+      .addCase(getGithubAccessToken.rejected, (state, action) => {
         state.isLoading = false;
         console.log(state);
         console.log(action);
