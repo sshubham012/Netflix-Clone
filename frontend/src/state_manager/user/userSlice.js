@@ -115,6 +115,8 @@ const userSlice = createSlice({
         state.isValidUser = true;
         console.log("state", state);
         console.log("action", action);
+        localStorage.setItem("access_token", action.payload.data.access_token)
+        
         toast.success("Logged in successfully!");
       })
       .addCase(getGithubAccessToken.rejected, (state, action) => {

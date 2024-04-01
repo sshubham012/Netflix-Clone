@@ -8,7 +8,7 @@ import { store } from "../state_manager/store";
 import { useNavigate } from "react-router";
 
 export default function Dashboard() {
-  const isValidUser = useSelector((store) => store.user.isValidUser);
+  const isValidUser = localStorage.getItem("access_token");
   const navigate = useNavigate();
   useEffect(() => {
     if (!isValidUser) {

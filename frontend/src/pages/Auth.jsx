@@ -20,7 +20,7 @@ export default function Auth() {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [variant, setVariant] = useState("login");
-  const isValidUser = useSelector((store) => store?.user.isValidUser);
+  const isValidUser = localStorage.getItem("access_token");
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const toggleVariant = () => {
