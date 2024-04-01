@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 
 export default function Profiles() {
   const navigate = useNavigate();
-  const isValidUser = useSelector((store) => store.user.isValidUser);
+  const isValidUser = localStorage.getItem("access_token");
   const handleNav = () => {
     console.log("hehe");
     navigate("/netflix-and-chill");

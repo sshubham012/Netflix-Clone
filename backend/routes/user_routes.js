@@ -15,7 +15,7 @@ const {
 router.get("/getaccesstoken", githubAccessToken);
 router.post("/auth/register", register);
 router.post("/auth/login", login);
-router.get("/user-data", getgitdata);
+router.get("/getGitData", getgitdata);
 // Routes for user operations
 router.get("/", getAllUsers);
 router.delete("/", deleteAllUsers);
