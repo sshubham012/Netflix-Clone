@@ -12,6 +12,8 @@ export default function Navbar() {
   const [showMobileMenu, setShowMobileMenu] = useState(false);
   const [showAccountMenu, setShowAccountMenu] = useState(false);
   const [showBackground, setShowBackground] = useState(false);
+
+  const imageUrl = localStorage.getItem("image");
   const toggleMenu = () => {
     setShowMobileMenu(!showMobileMenu);
   };
@@ -69,7 +71,7 @@ export default function Navbar() {
             className="flex flex-row items-center gap-2 cursor-pointer relative"
           >
             <div className="w-6 h-6 lg:w-10 lg:h-10 rounded-md overflow-hidden">
-              <img src={profileLogo} alt="Profile Logo" />
+              <img src={imageUrl ? imageUrl : profileLogo} alt="Profile Logo" />
             </div>
             <BsChevronDown
               className={`text-white fill-current transition ${
