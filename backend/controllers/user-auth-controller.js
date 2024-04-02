@@ -39,8 +39,7 @@ const login = async (req, res) => {
 };
 
 const githubAccessToken = async (req, res) => {
-  console.log("GitHub authorization code:", req.query.code);
-
+  // Construct URL parameters for GitHub access token request
   const params =
     "?client_id=" +
     process.env.CLIENT_ID +
@@ -49,47 +48,54 @@ const githubAccessToken = async (req, res) => {
     "&code=" +
     req.query.code;
 
-  try {
-    const response = await fetch(
-      "https://github.com/login/oauth/access_token" + params,
-      {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-        },
-      }
-    );
-
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
+  // Request GitHub access token
+  const tokenResponse = await fetch(
+    "https://github.com/login/oauth/access_token" + params,
+    {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+      },
     }
+  );
 
-    const data = await response.json();
-    console.log("GitHub access token response:", data);
-    res.status(StatusCodes.OK).json(data);
-  } catch (error) {
-    console.error("Error fetching GitHub access token:", error);
-    res
-      .status(StatusCodes.INTERNAL_SERVER_ERROR)
-      .json({ error: error.message });
+  if (!tokenResponse.ok) {
+    throw new Error(
+      `Failed to obtain access token. Status: ${tokenResponse.status}`
+    );
   }
-};
 
-const getgitdata = async (req, res) => {
-  const token = req.query.code;
-  const url = "https://api.github.com/octocat";
-  const headers = {
-    Authorization: `Bearer ${token}`,
+  // Parse access token from response
+  const tokenData = await tokenResponse.json();
+  const { access_token } = tokenData;
+
+  // Request GitHub user data using the access token
+  const userDataResponse = await fetch("https://api.github.com/user", {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${access_token}`,
+    },
+  });
+
+  if (!userDataResponse.ok) {
+    throw new Error(
+      `Failed to fetch GitHub user data. Status: ${userDataResponse.status}`
+    );
+  }
+
+  // Parse user data from response
+  const fullUserData = await userDataResponse.json();
+
+  // Save user data to database
+  const userDataToSave = {
+    email:"",
+    name: fullUserData.login,
+    image: fullUserData.avatar_url,
   };
-  console.log(1);
-  const response = await fetch(url, { method: "GET", headers });
-  console.log(1);
+  const user = await User.create(userDataToSave);
 
-  console.log(1);
-
-  console.log(response);
-  const data = await response.json();
-  return data;
+  // Send GitHub user data and access token back in the response
+  res.status(StatusCodes.OK).json({ userData: fullUserData, access_token });
 };
 
-module.exports = { register, login, githubAccessToken, getgitdata };
+module.exports = { register, login, githubAccessToken };

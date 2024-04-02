@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { toast } from "react-toastify";
 import customAxios from "../../../utils/axios";
+import { removeUserFromLocalStorage } from "../../utils/localstorage";
 
 const initialState = {
   isValidUser: false,
@@ -49,8 +50,6 @@ export const clearStore = createAsyncThunk(
   async (message, thunkAPI) => {
     try {
       thunkAPI.dispatch(logoutUser(message));
-      thunkAPI.dispatch(clearAllJobsState());
-      thunkAPI.dispatch(clearValues());
       return Promise.resolve();
     } catch (error) {
       return Promise.reject();
@@ -63,8 +62,7 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     logoutUser: (state, { payload }) => {
-      state.user = null;
-      state.isSidebarOpen = false;
+      state.isValidUser = false;
       removeUserFromLocalStorage();
       if (payload) {
         toast.success(payload);
@@ -115,8 +113,9 @@ const userSlice = createSlice({
         state.isValidUser = true;
         console.log("state", state);
         console.log("action", action);
-        localStorage.setItem("access_token", action.payload.data.access_token)
-        
+        localStorage.setItem("access_token", action.payload.data.access_token);
+        localStorage.setItem("username", action.payload.data.userData.login);
+        localStorage.setItem("image", action.payload.data.userData.avatar_url);
         toast.success("Logged in successfully!");
       })
       .addCase(getGithubAccessToken.rejected, (state, action) => {

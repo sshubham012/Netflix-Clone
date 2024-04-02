@@ -18,6 +18,7 @@ const errorHandlerMiddleware = (err, req, res, next) => {
       err.keyValue
     )} field, please choose another value`
     customError.statusCode = 400
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({msg:"Use different Email"})
   }
   if (err.name === 'CastError') {
     customError.msg = `No item found with id : ${err.value}`
