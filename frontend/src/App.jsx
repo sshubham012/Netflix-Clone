@@ -6,7 +6,8 @@ import Dashboard from "./pages/Dashboard";
 import Auth from "./pages/Auth";
 import TestComponent from "./components/TestComponet";
 import { ToastContainer } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
+import "react-toastify/dist/ReactToastify.css";
+import { Watch } from "./pages/Watch";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -17,14 +18,13 @@ const router = createBrowserRouter([
   },
   { path: "/profiles", element: <Profiles /> },
   { path: "/netflix-and-chill", element: <Dashboard /> },
-
+  { path: "/watch", element: <Watch /> },
 ]);
 function App() {
-
   return (
     <div className="h-full w-full">
       <RouterProvider router={router} />
-      <ToastContainer autoClose={5000} position="bottom-right"/>
+      <ToastContainer autoClose={5000} position="bottom-right" />
       {/* <Auth /> */}
       {/* <Profiles /> */}
       {/* <InfoModal
