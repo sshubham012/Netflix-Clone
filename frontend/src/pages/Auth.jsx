@@ -30,7 +30,6 @@ export default function Auth() {
   };
 
   const githubLogin = () => {
-    // console.log(window.location)
     window.location.assign(
       "https:/github.com/login/oauth/authorize?client_id=" + CLIENT_ID
     );
@@ -40,7 +39,6 @@ export default function Auth() {
     const queryParams = window.location.search;
     const urlParams = new URLSearchParams(queryParams);
     const codeParam = urlParams.get("code");
-    console.log("codeParams: ", codeParam);
 
     if (codeParam && !localStorage.getItem("accessToken")) {
       dispatch(getGithubAccessToken(codeParam));
@@ -69,7 +67,6 @@ export default function Auth() {
       password,
     };
     const thiss = dispatch(loginUser(userData));
-    console.log(thiss);
   };
 
   useEffect(() => {

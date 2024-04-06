@@ -12,7 +12,7 @@ const initialState = {
 export const registerUser = createAsyncThunk(
   "user/register-user",
   async (user, thunkAPI) => {
-    const res = await axios.post(
+    const res = await customAxios.post(
       "http://localhost:5000/user/auth/register",
       user
     );
@@ -24,7 +24,6 @@ export const registerUser = createAsyncThunk(
 export const loginUser = createAsyncThunk(
   "user/login-user",
   async (user, thunkAPI) => {
-    console.log(user);
     const res = await axios.post(`http://localhost:5000/user/auth/login`, user);
 
     return res.data;
@@ -34,14 +33,10 @@ export const loginUser = createAsyncThunk(
 export const getGithubAccessToken = createAsyncThunk(
   "user/githubLogin",
   async (code, thunkAPI) => {
-    console.log(code);
     const token = await customAxios.get(
       "http://localhost:5000/user/getaccesstoken?code=" + code
     );
-    console.log(token);
     return token;
-    // console.log(thunkAPI)
-    // console.log(code);
   }
 );
 
@@ -99,8 +94,6 @@ const userSlice = createSlice({
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.isLoading = false;
-        console.log(state);
-        console.log(action);
         toast.error("login failed", action.error.message);
         // Log the error to the console
         console.error("Login failed", action.error);
@@ -111,8 +104,6 @@ const userSlice = createSlice({
       .addCase(getGithubAccessToken.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isValidUser = true;
-        console.log("state", state);
-        console.log("action", action);
         localStorage.setItem("access_token", action.payload.data.access_token);
         localStorage.setItem("username", action.payload.data.userData.login);
         localStorage.setItem("image", action.payload.data.userData.avatar_url);
@@ -120,8 +111,7 @@ const userSlice = createSlice({
       })
       .addCase(getGithubAccessToken.rejected, (state, action) => {
         state.isLoading = false;
-        console.log(state);
-        console.log(action);
+
         toast.error("login failed", action.error.message);
         // Log the error to the console
         console.error("Login failed", action.error);

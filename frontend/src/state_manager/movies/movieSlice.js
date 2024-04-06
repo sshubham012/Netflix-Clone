@@ -12,11 +12,12 @@ export const getRandomMovie = createAsyncThunk(
   "movie/randomMovie",
   async (_, thunkAPI) => {
     try {
-      const res = await customAxios.get("http://localhost:5000/movies/getrandmovie");
-      console.log(res)
-      return res.data; // Return response data
+      const response = await customAxios.get(
+        "http://localhost:5000/movies/getRandMovie"
+      );
+      return response.data; // Return the actual data from the response
     } catch (error) {
-      return thunkAPI.rejectWithValue(error.message); // Reject with error message
+      return thunkAPI.rejectWithValue(error.response.data.message); // Reject with the error message
     }
   }
 );
@@ -24,20 +25,20 @@ export const getRandomMovie = createAsyncThunk(
 const movieSlice = createSlice({
   name: "movie",
   initialState,
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(getRandomMovie.pending, (state) => {
         state.loading = true;
-        state.error = null; 
+        state.error = null;
       })
       .addCase(getRandomMovie.fulfilled, (state, action) => {
         state.loading = false;
-        console.log(action.payloads);
-        state.currentMovie = action.payload; // Update currentMovie with response data
+        state.currentMovie = action.payload;
       })
       .addCase(getRandomMovie.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload; // Update error state with rejected value
+        state.error = action.payload;
       });
   },
 });
