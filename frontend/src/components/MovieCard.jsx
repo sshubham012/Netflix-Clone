@@ -2,11 +2,13 @@ import React from "react";
 import { FavButton } from "./FavButton";
 import { BsFillPlayCircleFill } from "react-icons/bs";
 import { BsChevronDown } from "react-icons/bs";
+import { Navigate, useNavigate } from "react-router";
 export const MovieCard = ({ data }) => {
+  const navigate = useNavigate();
   return (
     <div className="group bg-zinc-900 col-span relative h-[12vw]">
       <img
-        // onClick={redirectToWatch}
+        onClick={() => navigate("/watch")}
         src={data.thumbnailUrl}
         alt="Movie"
         draggable={false}
@@ -44,7 +46,7 @@ export const MovieCard = ({ data }) => {
       "
       >
         <img
-          // onClick={redirectToWatch}
+          onClick={() => navigate("/watch")}
           src={data.thumbnailUrl}
           alt="Movie"
           draggable={false}
@@ -74,7 +76,7 @@ export const MovieCard = ({ data }) => {
         >
           <div className="flex flex-row items-center gap-3">
             <div
-              // onClick={redirectToWatch}
+              onClick={() => navigate("/watch")}
               className="cursor-pointer w-6 h-6 lg:w-10 lg:h-10 bg-white rounded-full flex justify-center items-center transition hover:bg-neutral-300"
             >
               <BsFillPlayCircleFill className="text-black w-4 lg:w-6" />

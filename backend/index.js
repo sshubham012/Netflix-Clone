@@ -8,7 +8,7 @@ const cors = require("cors");
 
 const connectDatabase = require("./database/connect_database");
 const userRoutes = require("./routes/user_routes");
-// const movieRoutes = require("./routes/movie_routes");
+const movieRoutes = require("./routes/movie_routes");
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -30,7 +30,11 @@ connectDatabase(process.env.MONGO_URI)
 
 // Routes
 app.use("/user", userRoutes);
-// app.use("/movie", authenticateUser, movieRoutes);
+app.use(
+  "/movies",
+  // , authenticateUser
+  movieRoutes
+);
 
 // Error handling middleware (should be the last middleware)
 const notFoundMiddleware = require("./middleware/not-found");

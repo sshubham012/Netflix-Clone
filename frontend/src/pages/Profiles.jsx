@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from "react";
 import profileLogo from "../assets/default-blue.png";
 import { useNavigate } from "react-router";
-import { useSelector } from "react-redux";
 
 export default function Profiles() {
   const navigate = useNavigate();
   const isValidUser = localStorage.getItem("access_token");
   const handleNav = () => {
-    console.log("hehe");
     navigate("/netflix-and-chill");
   };
   const [username, setUsername] = useState("");

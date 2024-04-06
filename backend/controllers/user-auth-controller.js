@@ -85,7 +85,7 @@ const githubAccessToken = async (req, res) => {
 
   // Parse user data from response
   const fullUserData = await userDataResponse.json();
-
+  const useremail =  fullUserData.email || "";
   // Save user data to database
   const userDataToSave = {
     email:"",

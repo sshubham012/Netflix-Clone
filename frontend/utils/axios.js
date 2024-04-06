@@ -1,5 +1,4 @@
 import axios from "axios";
-import { clearStore } from "../src/state_manager/user/userSlice";
 import { getUserFromLocalStorage } from "./localStorage";
 
 const customAxios = axios.create({
