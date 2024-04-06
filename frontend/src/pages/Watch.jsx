@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { AiOutlineArrowLeft } from "react-icons/ai";
-import { useSelector } from "react-redux";
-export const Watch = ({ movie }) => {
-  console.log(movie);
-  const goBack = () => {
-    window.history.back();
-  };
+import { useLocation } from "react-router";
+export const Watch = () => {
+  const location = useLocation();
+
+  const movie = location.state;
   const [showControls, setShowControls] = useState(true);
 
   useEffect(() => {
@@ -14,12 +13,11 @@ export const Watch = ({ movie }) => {
     const handleMouseMove = () => {
       // Show controls when the mouse moves
       setShowControls(true);
-
       // Reset the timeout to hide controls if the mouse stops moving
       clearTimeout(timeoutId);
       timeoutId = setTimeout(() => {
         setShowControls(false);
-      }, 3000); // Hide controls after 5 seconds of mouse inactivity
+      }, 3000);
     };
 
     // Attach mousemove event listener
@@ -32,7 +30,7 @@ export const Watch = ({ movie }) => {
     };
   }, []);
   return (
-    <div className="h-screen w-screen relative">
+    <div className="h-screen w-screen bg-black">
       {/* Navigation */}
       <nav
         className={`fixed w-full p-4 z-10 flex flex-row items-center justify-between gap-8 bg-pink bg-opacity-70 ${
@@ -40,7 +38,9 @@ export const Watch = ({ movie }) => {
         } transition-opacity`}
       >
         <AiOutlineArrowLeft
-          onClick={goBack}
+          onClick={() => {
+            window.history.back();
+          }}
           className="w-4 md:w-10 text-white cursor-pointer hover:opacity-80 transition"
         />
         <p className="text-white text-1xl md:text-3xl font-bold">
@@ -53,9 +53,7 @@ export const Watch = ({ movie }) => {
       <video
         autoPlay
         controls
-        className={`h-full w-full ${
-          showControls ? "" : "opacity-0 pointer-events-none"
-        } transition-opacity`}
+        className={`h-full w-full`}
         src={movie?.videoUrl}
       ></video>
     </div>

@@ -22,8 +22,8 @@ export default function Billboard() {
     <div className="relative h-[56.25vw]">
       <video
         className="w-full h-[56.25vw] object-cover brightness-[60%]"
-        // autoPlay
-        // muted
+        autoPlay
+        muted
         loop
         poster={thumbnailUrl}
         src={videoUrl}
