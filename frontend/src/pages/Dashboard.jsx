@@ -19,7 +19,7 @@ export default function Dashboard() {
     <>
       <Navbar />
       <Billboard />
-      <MovieList title="Trending Now" data={movieData} />
+      <MovieList title="Trending Now"/>
     </>
   );
 }
