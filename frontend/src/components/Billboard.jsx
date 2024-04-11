@@ -1,13 +1,22 @@
-import React, { useEffect } from "react";
+import React, { useState,useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { AiOutlineInfoCircle } from "react-icons/ai";
 import { PlayButton } from "./PlayButton";
 import { getRandomMovie } from "../state_manager/movies/movieSlice";
+import { InfoModal } from "./InfoModal";
 
 export default function Billboard() {
   const dispatch = useDispatch();
   const movie = useSelector((store) => store.movie.currentMovie);
+  const [modalVisible, setModalVisible] = useState(false);
 
+  const handleOpenModal = () => {
+    setModalVisible(true);
+  };
+
+  const handleCloseModal = () => {
+    setModalVisible(false);
+  };
   useEffect(() => {
     dispatch(getRandomMovie());
   }, [dispatch]);
@@ -22,8 +31,8 @@ export default function Billboard() {
     <div className="relative h-[56.25vw]">
       <video
         className="w-full h-[56.25vw] object-cover brightness-[60%]"
-        autoPlay
-        muted
+        // autoPlay
+        // muted
         loop
         poster={thumbnailUrl}
         src={videoUrl}
@@ -37,9 +46,13 @@ export default function Billboard() {
         </p>
         <div className="flex flex-row items-center mt-3 md:mt-4 gap-3">
           <PlayButton movie={movie} />
-          <button className="bg-white text-white bg-opacity-30 rounded-md py-1 md:py-2 px-2 md:px-4 w-auto text-xs lg:text-lg font-semibold flex flex-row items-center hover:bg-opacity-20 transition">
-            <AiOutlineInfoCircle className="mr-1" />
+          <button
+            onClick={handleOpenModal}
+            className="bg-white text-white bg-opacity-30 rounded-md py-1 md:py-2 px-2 md:px-4 w-auto text-xs lg:text-lg font-semibold flex flex-row items-center hover:bg-opacity-20 transition"
+          >
+            <AiOutlineInfoCircle className="w-4 md:w-7 mr-1" />
             More Info
+            <InfoModal visible={modalVisible} onClose={handleCloseModal} data={movie}/>
           </button>
         </div>
       </div>
