@@ -61,7 +61,6 @@ const movieSlice = createSlice({
       })
       .addCase(getallmovies.fulfilled, (state, action) => {
         state.loading = false;
-        console.log(action);
         state.allMovies = action.payload;
       })
       .addCase(getallmovies.rejected, (state, action) => {

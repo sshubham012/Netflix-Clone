@@ -3,10 +3,19 @@ import { FavButton } from "./FavButton";
 import { BsFillPlayCircleFill } from "react-icons/bs";
 import { BsChevronDown } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
+import { InfoModal } from "./InfoModal";
+import { useState } from "react";
 
 export const MovieCard = ({ movie }) => {
   const navigate = useNavigate();
-  console.log("hehehehe",  movie);
+  const [modalVisible, setModalVisible] = useState(false);
+  const handleOpenModal = () => {
+    setModalVisible(true);
+  };
+
+  const handleCloseModal = () => {
+    setModalVisible(false);
+  };
   const handleWatch = () => {
     navigate("/watch", {
       state: {
@@ -44,20 +53,30 @@ export const MovieCard = ({ movie }) => {
             </div>
             <FavButton movieId={movie.id} />
             <div className="cursor-pointer ml-auto group/item w-6 h-6 lg:w-10 lg:h-10 border-white border-2 rounded-full flex justify-center items-center transition hover:border-neutral-300">
-              <BsChevronDown className="text-white group-hover/item:text-neutral-300 w-4 lg:w-6" />
+              <BsChevronDown
+                className="text-white group-hover/item:text-neutral-300 w-4 lg:w-6"
+                onClick={handleOpenModal}
+              />
             </div>
           </div>
           <p className="text-green-400 font-semibold mt-4">
             New <span className="text-white">2023</span>
           </p>
           <div className="flex flex-row mt-4 gap-2 items-center">
-            <p className="text-white text-[10px] lg:text-sm">{movie.duration}</p>
+            <p className="text-white text-[10px] lg:text-sm">
+              {movie.duration}
+            </p>
           </div>
           <div className="flex flex-row items-center gap-2 mt-4 text-[8px] text-white lg:text-sm">
             <p>{movie.genre}</p>
           </div>
         </div>
       </div>
+        <InfoModal
+          visible={modalVisible}
+          onClose={handleCloseModal}
+          data={movie}
+        />
     </div>
   );
 };

@@ -2,12 +2,9 @@ import React, { useCallback, useEffect, useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import { PlayButton } from "./PlayButton";
 import { FavButton } from "./FavButton";
-import data from "../../movies.json";
-export const InfoModal = ({ visible, onClose }) => {
-  const [isVisible, setIsVisible] = useState(visible);
-  //useInfoModal
-  //moviedata
 
+export const InfoModal = ({ visible, onClose, data }) => {
+  const [isVisible, setIsVisible] = useState(visible);
   useEffect(() => {
     setIsVisible(!!visible);
   }, [visible]);
@@ -37,30 +34,30 @@ export const InfoModal = ({ visible, onClose }) => {
               autoPlay
               muted
               loop
-              poster={data[2]?.thumbnailUrl}
-              src={data[2]?.videoUrl}
+              poster={data?.thumbnailUrl}
+              src={data?.videoUrl}
             ></video>
             <div
               onClick={() => {}}
               className="sursor-pointer absolute top-3 right-3 h-10 w-10 rounded-full bg-black bg-opacity-70 flex items-center justify-center"
             >
-              <AiOutlineClose className="text-white" size={20} />
+              <AiOutlineClose className="text-white" size={20} onClick={handleClose}/>
             </div>
             <div className="absolute bottom-[10%] left-10">
               <p className="text-white text-3xl md:text-4xl h-full lg:text-5xl font-bold mb-8">
-                {data[0].title}
+                {data.title}
               </p>
               <div className="flex flex-row gap-4">
-                <PlayButton movieId={data[0]?.id} />
-                <FavButton movieId={data[0]?.id} />
+                <PlayButton movie={data} />
+                <FavButton movieId={data?.id} />
               </div>
             </div>
           </div>
           <div className="px-12 py-8">
             <p className="text-green-400 font-semibold text-lg">New</p>
-            <p className="text-white text-lg">{data[0].duration}</p>
-            <p className="text-white text-lg">{data[0].genre}</p>
-            <p className="text-white text-lg">{data[0].description}</p>
+            <p className="text-white text-lg">{data.duration}</p>
+            <p className="text-white text-lg">{data.genre}</p>
+            <p className="text-white text-lg">{data.description}</p>
           </div>
         </div>
       </div>
