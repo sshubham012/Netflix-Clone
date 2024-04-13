@@ -105,6 +105,7 @@ const userSlice = createSlice({
         state.isLoading = false;
         state.isValidUser = true;
         localStorage.setItem("access_token", action.payload.data.access_token);
+        console.warn(action.payload.data);
         localStorage.setItem("username", action.payload.data.userData.login);
         localStorage.setItem("image", action.payload.data.userData.avatar_url);
         toast.success("Logged in successfully!");

@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { MovieCard } from "./MovieCard";
 import { useDispatch } from "react-redux";
 import { getallmovies } from "../state_manager/movies/movieSlice";
-
+import "./styles/scrollbar.css"
 export const MovieList = ({ title }) => {
   const dispatch = useDispatch();
   useEffect(() => {
@@ -16,9 +16,11 @@ export const MovieList = ({ title }) => {
         <p className="text-white text-md md:text-xl lg:text-2xl font-semibold mb-4">
           {title}
         </p>
-        <div className="grid grid-cols-4 gap-2">
+        <div className="flex space-x-4 overflow-x-auto hide-scroll-bar">
           {data.map((movie) => (
-            <MovieCard key={movie.id} movie={movie} />
+            <div className="flex-shrink-0 w-auto">
+              <MovieCard key={movie.id} movie={movie} />
+            </div>
           ))}
         </div>
       </div>

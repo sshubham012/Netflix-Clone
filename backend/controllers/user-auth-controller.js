@@ -39,18 +39,10 @@ const login = async (req, res) => {
 };
 
 const githubAccessToken = async (req, res) => {
-  // Construct URL parameters for GitHub access token request
-  const params =
-    "?client_id=" +
-    process.env.CLIENT_ID +
-    "&client_secret=" +
-    process.env.CLIENT_SECRET +
-    "&code=" +
-    req.query.code;
+  const params = `?client_id=${process.env.CLIENT_ID}&client_secret=${process.env.CLIENT_SECRET}&code=${req.query.code}`;
 
-  // Request GitHub access token
   const tokenResponse = await fetch(
-    "https://github.com/login/oauth/access_token" + params,
+    `https://github.com/login/oauth/access_token${params}`,
     {
       method: "POST",
       headers: {
@@ -65,11 +57,8 @@ const githubAccessToken = async (req, res) => {
     );
   }
 
-  // Parse access token from response
   const tokenData = await tokenResponse.json();
   const { access_token } = tokenData;
-
-  // Request GitHub user data using the access token
   const userDataResponse = await fetch("https://api.github.com/user", {
     method: "GET",
     headers: {
@@ -82,19 +71,19 @@ const githubAccessToken = async (req, res) => {
       `Failed to fetch GitHub user data. Status: ${userDataResponse.status}`
     );
   }
-
-  // Parse user data from response
   const fullUserData = await userDataResponse.json();
-  const useremail =  fullUserData.email || "";
-  // Save user data to database
-  const userDataToSave = {
-    email:"",
-    name: fullUserData.login,
-    image: fullUserData.avatar_url,
-  };
-  const user = await User.create(userDataToSave);
+  const userEmail = fullUserData.email || "";
 
-  // Send GitHub user data and access token back in the response
+  let user = await User.findOne({ email: userEmail });
+  if (!user) {
+    const userDataToSave = {
+      email: userEmail,
+      name: fullUserData.login,
+      image: fullUserData.avatar_url,
+    };
+    user = await User.create(userDataToSave);
+  }
+
   res.status(StatusCodes.OK).json({ userData: fullUserData, access_token });
 };
 
