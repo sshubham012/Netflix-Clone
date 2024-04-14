@@ -6,7 +6,6 @@ const getAllUsers = async (req, res) => {
 };
 
 const getUser = async (req, res) => {
-  console.log(req.params.id);
   const userID = req.params.id;
   const user = await Users.findById(userID).catch((err) => console.log(err));
   if (!user) {
