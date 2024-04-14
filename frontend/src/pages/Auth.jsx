@@ -3,14 +3,13 @@ import Input from "../components/Input";
 import logo from "../assets/logo.png";
 import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
   getGithubAccessToken,
   loginUser,
   registerUser,
 } from "../state_manager/user/userSlice";
 import { toast } from "react-toastify";
-import { store } from "../state_manager/store";
 import { useNavigate } from "react-router";
 
 const CLIENT_ID = "fd47e71dea4f9e7ee15a";

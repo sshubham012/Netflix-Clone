@@ -2,9 +2,6 @@ import React, { useEffect } from "react";
 import Navbar from "../components/Navbar";
 import Billboard from "../components/Billboard";
 import { MovieList } from "../components/MovieList";
-import movieData from "../../movies.json";
-import { useSelector } from "react-redux";
-import { store } from "../state_manager/store";
 import { useNavigate } from "react-router";
 
 export default function Dashboard() {
