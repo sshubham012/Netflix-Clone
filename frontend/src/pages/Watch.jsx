@@ -11,19 +11,16 @@ export const Watch = () => {
     let timeoutId;
 
     const handleMouseMove = () => {
-      // Show controls when the mouse moves
       setShowControls(true);
-      // Reset the timeout to hide controls if the mouse stops moving
+
       clearTimeout(timeoutId);
       timeoutId = setTimeout(() => {
         setShowControls(false);
       }, 3000);
     };
 
-    // Attach mousemove event listener
     document.addEventListener("mousemove", handleMouseMove);
 
-    // Clean up function to remove event listener
     return () => {
       document.removeEventListener("mousemove", handleMouseMove);
       clearTimeout(timeoutId);

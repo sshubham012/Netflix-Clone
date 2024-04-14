@@ -9,10 +9,7 @@ import { Watch } from "./pages/Watch";
 const router = createBrowserRouter([
   {
     path: "/",
-    element: (
-      // <TestComponent/>
-      <Auth />
-    ),
+    element: <Auth />,
   },
   { path: "/profiles", element: <Profiles /> },
   { path: "/netflix-and-chill", element: <Dashboard /> },
@@ -23,15 +20,6 @@ function App() {
     <div className="h-full w-full">
       <RouterProvider router={router} />
       <ToastContainer autoClose={5000} position="bottom-right" />
-      {/* <InfoModal
-      visible
-      onClose={() => {
-        alert("onclosed");
-      }}
-    />
-    <Navbar />
-    <Billboard />
-      {/* <Dashboard /> */}
     </div>
   );
 }
