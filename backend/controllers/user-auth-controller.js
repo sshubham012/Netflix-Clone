@@ -2,7 +2,6 @@ const User = require("../models/user_model");
 const { StatusCodes } = require("http-status-codes");
 const { BadRequestError, UnauthenticatedError } = require("../errors");
 const bcrypt = require("bcrypt");
-const { response } = require("express");
 
 const fetch = (...args) =>
   import("node-fetch").then(({ default: fetch }) => fetch(...args));
@@ -83,8 +82,10 @@ const githubAccessToken = async (req, res) => {
     };
     user = await User.create(userDataToSave);
   }
+  console.log(fullUserData);
+  console.log(user);
 
-  res.status(StatusCodes.OK).json({ userData: fullUserData, access_token });
+  res.status(StatusCodes.OK).json({ userData: user, access_token });
 };
 
 module.exports = { register, login, githubAccessToken };
